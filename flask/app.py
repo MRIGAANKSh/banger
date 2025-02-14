@@ -13,6 +13,9 @@ def index():
 @app.route('/hello')
 def hello():
     return '<h1>Hello, World</h1>'
+@app.route('/mrigaank')
+def hi():
+    return '<h1>my name is mrigaank sharma this is my gihub </h1> '
 
 if __name__=="__main__":
     app.run()
