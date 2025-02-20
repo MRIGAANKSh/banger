@@ -1,0 +1,120 @@
+<div class="container py-5">
+  
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="text-primary fw-bold border-bottom pb-2">Enter User Details</h2>
+    </div>
+  </div>
+
+  <!--  Messages are shown here -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ errorMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- User ka Form -->
+  <div class="row mb-5">
+    <div class="col-12 col-md-8 col-lg-6">
+      <form (submit)="onSubmit()" class="bg-white p-4 shadow-sm rounded-3 border">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Name:</label>
+          <input type="text" [(ngModel)]="user.name" name="name" required 
+                 class="form-control form-control-lg" placeholder="Enter full name" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Phone:</label>
+          <input type="text" [(ngModel)]="user.phone" name="phone" required 
+                 class="form-control form-control-lg" placeholder="Enter phone number" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">ID Number:</label>
+          <input type="text" [(ngModel)]="user.idNumber" name="idNumber" required 
+                 class="form-control form-control-lg" placeholder="Enter ID number" />
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold">Upload Image:</label>
+          <input type="file" (change)="onFileSelected($event)" 
+                 class="form-control form-control-lg" accept="image/*" />
+          <div *ngIf="user.picture" class="mt-2">
+            <img [src]="user.picture" class="img-thumbnail" 
+                 style="width: 120px; height: 120px; object-fit: cover;" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg w-100">
+          <i class="bi bi-save me-2"></i>Save User
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- User Records ki Table -->
+  <div class="row">
+    <div class="col-12">
+      <h2 class="text-primary fw-bold border-bottom pb-2 mb-4">User Records</h2>
+      
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover bg-white">
+          <thead class="table-dark">
+            <tr>
+              <th class="text-center" style="width: 100px">Image</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>ID Number</th>
+              <th style="width: 100px">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of users; let i = index">
+              <td class="text-center">
+                <img *ngIf="record.picture" [src]="record.picture" 
+                     class="rounded-circle border" 
+                     style="width: 50px; height: 50px; object-fit: cover;" />
+                <div *ngIf="!record.picture" class="text-muted small">No image</div>
+              </td>
+              <td>
+                <input type="text" [value]="record.name" 
+                       (input)="editField(i, 'name', $event)" 
+                       class="form-control border-0 bg-transparent" />
+              </td>
+              <td>
+                <input type="text" [value]="record.phone" 
+                       (input)="editField(i, 'phone', $event)" 
+                       class="form-control border-0 bg-transparent" />
+              </td>
+              <td>
+                <input type="text" [value]="record.idNumber" 
+                       (input)="editField(i, 'idNumber', $event)" 
+                       class="form-control border-0 bg-transparent" />
+              </td>
+              <td class="text-center">
+                <button (click)="deleteRecord(i)" 
+                        class="btn btn-danger btn-sm" 
+                        title="Delete User">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="users.length === 0">
+              <td colspan="5" class="text-center py-4 text-muted">
+                No user records found
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
