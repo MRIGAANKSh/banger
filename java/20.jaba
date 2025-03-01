@@ -1,0 +1,23 @@
+se this editor to write, compile and run your Java code online
+
+class Main {
+    public static void main(String[] args) {
+       
+        Student S=new Student("mrigaankj","20");
+        
+        S.info();
+    }
+    
+}
+
+class Student{
+    String name;
+    String age;
+    public void info(){
+        System.out.println(this.name+this.age);
+    }
+    Student(String name,String age){
+        this.name=name;
+        this.age=age;
+    }
+}
